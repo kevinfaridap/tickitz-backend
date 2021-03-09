@@ -1,12 +1,5 @@
 # backend-beginner-arkademy
 
-Berikut tugas week 4= backend- begineer
-
-<img src="img/Screenshot (211).png">
-<img src="img/Screenshot (212).png">
-<img src="img/Screenshot (213).png">
-<img src="img/Screenshot (214).png">
-<img src="img/Screenshot (215).png">
-<img src="img/Screenshot (216).png">
-<img src="img/Screenshot (217).png">
-<img src="img/Screenshot (218).png">
+<h1> About This Project </h1>
+<h5> This project was made to compelete the task from Mr. Muhammad Risano Akbar.
+This web application created using node.js and express.js.</h5> 
