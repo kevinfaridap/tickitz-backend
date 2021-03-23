@@ -37,6 +37,31 @@ const user = {
     })
   },
 
+  // Ganti dengan finduser
+  checkEmail: (email) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT COUNT(email) as countEmail FROM user WHERE email = ?', email ,(err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  },
+
+  findUser: (email) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT * from user WHERE email = ?', email ,(err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  },
+
   updateUser: (idUser, data) => {
     return new Promise((resolve, reject) => {
       connection.query('UPDATE user SET ? WHERE idUser=?', [data, idUser], (err, result) => {

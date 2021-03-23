@@ -27,6 +27,7 @@ app.use(morgan('dev'))
 // app.use('/payments', routerPayments)
 app.use('/v1', route)
 
+app.use('/image', express.static('./uploads'))
 
 app.use('*', (req, res, next) => {
   const error = new Error('ERROR.........')
@@ -43,6 +44,9 @@ app.use((err, req, res, next) => {
     status_error: err.status
   })
 })
+
+
+
 
 app.listen(port, () => {
   console.log('Server berjalan di port ' + port)

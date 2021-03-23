@@ -1,6 +1,9 @@
 const paymentModels = require('../models/payments')
 
 exports.getPayment = (req, res) => {
+  // Contoh ambil nilai email dari middlewares
+  // const email = req.email
+  // console.log(email);
   paymentModels.getPayments()
     .then((result) => {
       res.json({
