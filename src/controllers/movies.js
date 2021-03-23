@@ -3,45 +3,38 @@ const moviesModels = require('../models/movies')
 const redis = require('redis')
 const client = redis.createClient(6379)
 
-// TEST PAGINATION ( WORKS)
-exports.getPageMovie = (req, res) => {
-  const firstData = req.query.firstData || 0;
-  const limit = req.query.limit || 5;
-
-  moviesModels.getPageMovies(firstData, limit)
-    .then((result) => {
-        const dataMovie = result
-        client.setex("getAllMovies", 60 * 60 * 12, JSON.stringify(dataMovie))
-        // console.log(JSON.stringify(dataMovie));
-        res.json({
-          message: 'Success',
-          status : 200,
-          data: dataMovie,
-        })
-    })
-    .catch((err) => {
-      res.json({
-        err: err + 'Error Cant Get Data',
-        status: 400
-      })
-    })
-}
 
 
-// File lama sebelum pagination(works)
-exports.getMovie = (req, res) => {
+// GetAllMovie + Search + Pagination
+exports.getMovie = async (req, res) => {
   const searchMovie = req.query.movietittle || ''
-  moviesModels.getMovies(searchMovie)
-    .then((result) => {
-      if (result.length>0){
+  const limit = parseInt(req.query.limit) || 5;
+  const page = parseInt(req.query.page) || 1;
+  const countMovies = await moviesModels.countMovies()
+  // console.log(req.query.limit);
+  // console.log(req.query.movietittle);
+  const totalData = countMovies[0].totalData;
+  const totalPage = Math.ceil(totalData / limit);
+  const offset = (page - 1) * limit
+  moviesModels.getMovies(searchMovie, offset, limit)
+  
+  .then((result) => {
+    if (result.length>0){
+        // console.log(result);
+        // const dataMovie = result
+        // client.setex("getAllMovies", 60 * 60 * 12, JSON.stringify(dataMovie))
         res.json({
           message: 'Success',
           status : 200,
-          data: result
+          currentPage: page,
+          Items: totalPage,
+          totalMovies: totalData, 
+          MaxperPage: limit,
+          data: result,
         })
       } else{
         res.json({
-         err: 'Data not found',
+          err: 'Data not found',
           status: 400
         })
       }
@@ -86,22 +79,22 @@ exports.getSortMovie = (req, res) => {
   const order = req.query.order || "ASC";
   moviesModels.getSortMovies(by, order)
     .then((result) => {
-        res.json({
+      res.json({
           message: 'Success',
           status : 200,
           data: result
         })
       }) 
-    .catch((err) => {
+      .catch((err) => {
       res.json({
         err: err + 'Error Cant Get Data',
         status: 400
       })
     })
-}
+  }
 
 
-exports.getMovieById = (req, res) => {
+  exports.getMovieById = (req, res) => {
   const idMovie = req.params.idmovie
   moviesModels.getMoviesById(idMovie)
     .then((result) => {
@@ -113,9 +106,9 @@ exports.getMovieById = (req, res) => {
       } else{
         res.json({
          err: 'Cannot find data id = ' + idMovie,
-          status: 400
+         status: 400
         })
-  
+        
       }
 
     })
@@ -156,7 +149,7 @@ exports.insertMovie = (req, res) => {
 exports.updateMovie = (req, res) => {
   const idMovie = req.params.idmovie
   const { movieTittle, genre, directedBy, duration, casts, synopsis } = req.body
-
+  
   const data = {
     movieTittle,
     genre,
@@ -187,12 +180,12 @@ exports.updateMovie = (req, res) => {
         status: 500
       })
     })
-}
+  }
 
 exports.deleteMovie = (req, res) => {
   const idMovie = req.params.idmovie
   moviesModels.deleteMovies(idMovie)
-    .then((result) => {
+  .then((result) => {
       if(result.affectedRows !== 0){
         res.json({
           message: `Success delete id ${idMovie} !`,
@@ -211,3 +204,27 @@ exports.deleteMovie = (req, res) => {
 }
 
 
+
+// TEST PAGINATION ( WORKS)
+// exports.getPageMovie = (req, res) => {
+//   const firstData = req.query.firstData || 0;
+//   const limit = req.query.limit || 5;
+
+//   moviesModels.getPageMovies(firstData, limit)
+//     .then((result) => {
+//         const dataMovie = result
+//         client.setex("getAllMovies", 60 * 60 * 12, JSON.stringify(dataMovie))
+//         // console.log(JSON.stringify(dataMovie));
+//         res.json({
+//           message: 'Success',
+//           status : 200,
+//           data: dataMovie,
+//         })
+//     })
+//     .catch((err) => {
+//       res.json({
+//         err: err + 'Error Cant Get Data',
+//         status: 400
+//       })
+//     })
+// }

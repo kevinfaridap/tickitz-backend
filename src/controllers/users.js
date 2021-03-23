@@ -95,7 +95,7 @@ exports.loginUser = async (req, res) => {
     delete user.password;
 
     // Cek email
-    const payload = {email: user.email, firstName: user.firstName, lastName: user.lastName}
+    const payload = {email: user.email, firstName: user.firstName, lastName: user.lastName, role: user.role}
     jwt.sign(payload, process.env.SECRET_KEY , {expiresIn: '1h'}, function(err, token){
      user.token = token
      return helpers.response(res, user, 200,null)    
