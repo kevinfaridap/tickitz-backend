@@ -15,7 +15,7 @@ router
   // .get('/page',auth.verifyAccess, cacheAllMovies, moviesController.getPageMovie)
   .get('/:idmovie', moviesController.getMovieById)
   .post('/', uploadMulter.single('image') ,moviesController.insertMovie)
-  .put('/:idmovie', moviesController.updateMovie)
+  .put('/:idmovie', uploadMulter.single('image'), moviesController.updateMovie)
   .delete('/:idmovie', moviesController.deleteMovie)
 
 

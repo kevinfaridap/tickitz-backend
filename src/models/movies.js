@@ -106,8 +106,35 @@ const movie = {
     })
   }
 }
+  module.exports = movie
+  
+//   updateMovies: (data, idmovie) => {
+//     return new Promise((resolve, reject) => {
+//       connection.query('UPDATE movies SET ? WHERE idMovie = ?', [data, idmovie], (err, result) => {
+//         if (!err) {
+//           resolve(result)
+//         } else {
+//           reject(err)
+//         }
+//       })
+//     })
+//   }
+// }
 
-module.exports = movie
+
+//   updateMovies: (data, idmovie) => {
+//     return new Promise((resolve, reject) => {
+//       connection.query('UPDATE movies SET ? WHERE idMovie = ?', [data, idmovie], (err, result) => {
+//         if (!err) {
+//           resolve(result)
+//         } else {
+//           reject(err)
+//         }
+//       })
+//     })
+//   }
+// }
+
 
 
 

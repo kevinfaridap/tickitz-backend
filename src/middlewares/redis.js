@@ -13,8 +13,13 @@ const cacheAllMovies = (req, res, next) =>{
     }
   })
 }
+const clearAllProduct = (req, res, next) =>{
+  client.del('getAllMovies')
+  next()
+}
 
 
 module.exports={
-  cacheAllMovies
+  cacheAllMovies,
+  clearAllProduct
 }

@@ -8,7 +8,24 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname )
     }
 })
-const upload = multer({storage: storage})
+
+const fileFilter = (req, file, cb) => {
+    // validasi hanya boleh jpeg atau png
+    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/jpg') {
+        cb(null, true);
+    } else {
+        cb(new Error('.jpeg, .png, .jpg only!'));
+    }
+}
+
+const maxSize = 2 * 1024 * 1024 
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+    limits: { fileSize: maxSize },
+})
+
+
 
 module.exports = {
     uploadMulter: upload

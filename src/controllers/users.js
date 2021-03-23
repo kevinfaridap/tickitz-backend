@@ -10,6 +10,7 @@ exports.getUser = (req, res) => {
   userModels.getUsers()
     .then((result) => {
       res.json({
+        message: 'Welcome Admin!!',
         data: result
       })
     })
@@ -22,9 +23,18 @@ exports.getUserById = (req, res) => {
   const idUser = req.params.idUser
   userModels.getUserById(idUser)
     .then((result) => {
-      res.json({
-        data: result
-      })
+      if (result.length>0){
+        res.json({
+          message: `Succes get data id: ${idUser}`,
+          status: 200,
+          data: result
+        })
+      } else{
+        res.json({
+          message:'Id not found !',
+          status: 500
+        })
+      }
     })
 }
 
@@ -53,7 +63,7 @@ exports.insertUser = (req, res) => {
 // hash passowrd
 exports.registerUser = async(req, res) => {
   try {
-      const { firstName, lastName, email, password, phoneNumber } = req.body
+      const { firstName, lastName, email, password, phoneNumber, role } = req.body
       const result = await userModels.findUser(email)
       // const count = result[0].countEmail
       // if (count > 0){
@@ -68,7 +78,8 @@ exports.registerUser = async(req, res) => {
             password: await hashPassword.hashPassword(password),
             firstName: firstName,
             lastName: lastName,
-            phoneNumber: ''
+            phoneNumber: phoneNumber,
+            role: role
           }
       const resultInsert = await userModels.insertUser(data)
       
@@ -117,9 +128,18 @@ exports.updateUser = (req, res) => {
   }
   userModels.updateUser(idUser, data)
     .then((result) => {
-      res.json({
-        data: result
-      })
+      if(result.changedRows !== 0){
+        res.json({
+          message: `Succes update data`,
+          status: 200,
+          data: data
+        })
+      } else{
+        res.json({
+          message:'Id not found !',
+          status: 500
+        })
+      }
     })
     .catch((err) => {
       console.log(err)
@@ -130,9 +150,17 @@ exports.deleteUser = (req, res) => {
   const idUser = req.params.idUser
   userModels.deleteUser(idUser)
     .then((result) => {
-      res.json({
-        data: result
-      })
+      if(result.affectedRows !== 0){
+        res.json({
+          message: `Succes delete id: ${idUser}`,
+          status: 200,
+        })
+      } else{
+        res.json({
+          message:'Id not found !',
+          status: 500
+        })
+      }
     })
     .catch((err) => {
       console.log(err)

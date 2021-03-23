@@ -118,6 +118,13 @@ exports.getSortMovie = (req, res) => {
 }
 
 exports.insertMovie = (req, res) => {
+
+  if(!req.file){
+    const err = new Error('You must upload the image!');
+    err.errorStatus= 400;
+    throw err;
+  }
+
   const { movieTittle, genre, directedBy, duration, casts, synopsis } = req.body
 
   const data = {
@@ -147,18 +154,26 @@ exports.insertMovie = (req, res) => {
 }
 
 exports.updateMovie = (req, res) => {
+  // console.log(req.file.filename);
+  if(!req.file){
+    const err = new Error('You must upload the image!');
+    err.errorStatus= 400;
+    throw err;
+  }
+
   const idMovie = req.params.idmovie
   const { movieTittle, genre, directedBy, duration, casts, synopsis } = req.body
-  
   const data = {
     movieTittle,
     genre,
-    directedBy,
     releaseDate: new Date(),
+    directedBy,
     duration,
+    image: `http://localhost:8000/image/${req.file.filename}`,
     casts,
     synopsis
   }
+  // console.log(data);
   moviesModels.updateMovies(idMovie, data)
     .then((result) => {
       if(result.changedRows !== 0){
