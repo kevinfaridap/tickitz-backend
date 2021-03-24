@@ -1,5 +1,5 @@
 # backend-beginner-arkademy
-and
+&
 # intermediate-backend
 
 
