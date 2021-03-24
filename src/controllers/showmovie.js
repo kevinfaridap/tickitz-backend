@@ -1,5 +1,5 @@
 const { json } = require('body-parser')
-const moviesModels = require('../models/movies')
+const showMoviesModels = require('../models/showmovie')
 const redis = require('redis')
 const client = redis.createClient(6379)
 
@@ -8,19 +8,19 @@ exports.getMovie = async (req, res) => {
   const searchMovie = req.query.movietittle || ''
   const limit = parseInt(req.query.limit) || 5
   const page = parseInt(req.query.page) || 1
-  const countMovies = await moviesModels.countMovies()
+  const countMovies = await showMoviesModels.countMovies()
   // console.log(req.query.limit);
   // console.log(req.query.movietittle);
   const totalData = countMovies[0].totalData
   const totalPage = Math.ceil(totalData / limit)
   const offset = (page - 1) * limit
-  moviesModels.getMovies(searchMovie, offset, limit)
+  showMoviesModels.getMovies(searchMovie, offset, limit)
 
     .then((result) => {
       if (result.length > 0) {
         // console.log(result);
-        // const dataMovie = result
-        // client.setex("getAllMovies", 60 * 60 * 12, JSON.stringify(dataMovie))
+        const dataMovie = result
+        client.setex('getAllNowShowingMovies', 60 * 60 * 12, JSON.stringify(dataMovie))
         res.json({
           message: 'Success',
           status: 200,
@@ -45,53 +45,9 @@ exports.getMovie = async (req, res) => {
     })
 }
 
-exports.getSearchMovie = (req, res) => {
-  const searchMovie = req.query.movietittle || ''
-  moviesModels.getSearchMovies(searchMovie)
-    .then((result) => {
-      if (result.length > 0) {
-        res.json({
-          message: 'Success',
-          status: 200,
-          data: result
-        })
-      } else {
-        res.json({
-          err: 'Data not found',
-          status: 400
-        })
-      }
-    })
-    .catch((err) => {
-      res.json({
-        err: err + 'Error Cant Get Data',
-        status: 400
-      })
-    })
-}
-
-exports.getSortMovie = (req, res) => {
-  const by = req.query.by || 'id'
-  const order = req.query.order || 'ASC'
-  moviesModels.getSortMovies(by, order)
-    .then((result) => {
-      res.json({
-        message: 'Success',
-        status: 200,
-        data: result
-      })
-    })
-    .catch((err) => {
-      res.json({
-        err: err + 'Error Cant Get Data',
-        status: 400
-      })
-    })
-}
-
 exports.getMovieById = (req, res) => {
   const idMovie = req.params.idmovie
-  moviesModels.getMoviesById(idMovie)
+  showMoviesModels.getMoviesById(idMovie)
     .then((result) => {
       if (result.length > 0) {
         res.json({
@@ -117,19 +73,19 @@ exports.insertMovie = (req, res) => {
     throw err
   }
 
-  const { movieTittle, genre, directedBy, duration, casts, synopsis } = req.body
+  const { tittleMovie, genreMovie, directMovie, castsMovie, durationMovie, synopsisMovie } = req.body
 
   const data = {
-    movieTittle,
-    genre,
-    directedBy,
+    tittleMovie,
+    genreMovie,
+    directMovie,
+    castsMovie,
     releaseDate: new Date(),
-    duration,
-    casts,
-    image: `http://localhost:8000/image/${req.file.filename}`,
-    synopsis
+    durationMovie,
+    synopsisMovie,
+    image: `http://localhost:8000/image/${req.file.filename}`
   }
-  moviesModels.insertMovies(data)
+  showMoviesModels.insertMovies(data)
     .then((result) => {
       res.json({
         message: 'Success Insert Data',
@@ -154,19 +110,19 @@ exports.updateMovie = (req, res) => {
   }
 
   const idMovie = req.params.idmovie
-  const { movieTittle, genre, directedBy, duration, casts, synopsis } = req.body
+  const { tittleMovie, genreMovie, directMovie, castsMovie, durationMovie, synopsisMovie } = req.body
   const data = {
-    movieTittle,
-    genre,
+    tittleMovie,
+    genreMovie,
+    directMovie,
+    castsMovie,
     releaseDate: new Date(),
-    directedBy,
-    duration,
-    image: `http://localhost:8000/image/${req.file.filename}`,
-    casts,
-    synopsis
+    durationMovie,
+    synopsisMovie,
+    image: `http://localhost:8000/image/${req.file.filename}`
   }
   // console.log(data);
-  moviesModels.updateMovies(idMovie, data)
+  showMoviesModels.updateMovies(idMovie, data)
     .then((result) => {
       if (result.changedRows !== 0) {
         res.json({
@@ -191,12 +147,11 @@ exports.updateMovie = (req, res) => {
 
 exports.deleteMovie = (req, res) => {
   const idMovie = req.params.idmovie
-  moviesModels.deleteMovies(idMovie)
+  showMoviesModels.deleteMovies(idMovie)
     .then((result) => {
       if (result.affectedRows !== 0) {
         res.json({
           message: `Success delete id ${idMovie} !`
-          // data: result
         })
       } else {
         res.json({
@@ -209,27 +164,3 @@ exports.deleteMovie = (req, res) => {
       console.log(err)
     })
 }
-
-// TEST PAGINATION ( WORKS)
-// exports.getPageMovie = (req, res) => {
-//   const firstData = req.query.firstData || 0;
-//   const limit = req.query.limit || 5;
-
-//   moviesModels.getPageMovies(firstData, limit)
-//     .then((result) => {
-//         const dataMovie = result
-//         client.setex("getAllMovies", 60 * 60 * 12, JSON.stringify(dataMovie))
-//         // console.log(JSON.stringify(dataMovie));
-//         res.json({
-//           message: 'Success',
-//           status : 200,
-//           data: dataMovie,
-//         })
-//     })
-//     .catch((err) => {
-//       res.json({
-//         err: err + 'Error Cant Get Data',
-//         status: 400
-//       })
-//     })
-// }

@@ -4,35 +4,34 @@ const connection = require('../configs/db')
 const ticket = {
 
   // PAGINATION (WORKS)
-  getPageTickets: (firstData, limit  ) => {
+  getPageTickets: (firstData, limit) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        "SELECT COUNT(*) AS totalData FROM ticket ", (err, result) => {
-          let totalData;
+        'SELECT COUNT(*) AS totalData FROM ticket ', (err, result) => {
+          let totalData
           if (err) {
-            reject(new Error("Internal server error"));
+            reject(new Error('Internal server error'))
           } else {
-            totalData = result[0].totalData;
-            totalPage = Math.ceil(totalData / limit);
+            totalData = result[0].totalData
+            totalPage = Math.ceil(totalData / limit)
           }
           connection.query(
             `SELECT * FROM ticket LIMIT ${firstData}, ${limit} `, (err, result) => {
               if (err) {
-                reject(new Error("Internal server error"));
+                reject(new Error('Internal server error'))
               } else {
                 resolve([{
                   totalData: totalData,
-                  totalPage: totalPage, 
+                  totalPage: totalPage,
                   data: result
-                }]);
+                }])
               }
             }
-          );
+          )
         }
-      );
-    });
+      )
+    })
   },
-  
 
   // File lama belum pagination (works)
   getTickets: (ticketmovie) => {
@@ -46,7 +45,6 @@ const ticket = {
       })
     })
   },
-
 
   getSearchTickets: (ticketmovie) => {
     return new Promise((resolve, reject) => {
@@ -62,17 +60,15 @@ const ticket = {
 
   getSortTickets: (by, order) => {
     return new Promise((resolve, reject) => {
-      connection.query(`SELECT * FROM ticket ORDER BY ${by} ${order}` ,(err, result) => {
+      connection.query(`SELECT * FROM ticket ORDER BY ${by} ${order}`, (err, result) => {
         if (!err) {
           resolve(result)
-
         } else {
           reject(err)
         }
       })
     })
   },
-  
 
   // sortTickets:()=>{
   //     return new Promise((resolve, reject)=>{

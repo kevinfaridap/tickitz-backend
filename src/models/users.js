@@ -40,7 +40,7 @@ const user = {
   // Ganti dengan finduser
   checkEmail: (email) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT COUNT(email) as countEmail FROM user WHERE email = ?', email ,(err, result) => {
+      connection.query('SELECT COUNT(email) as countEmail FROM user WHERE email = ?', email, (err, result) => {
         if (!err) {
           resolve(result)
         } else {
@@ -52,7 +52,7 @@ const user = {
 
   findUser: (email) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * from user WHERE email = ?', email ,(err, result) => {
+      connection.query('SELECT * from user WHERE email = ?', email, (err, result) => {
         if (!err) {
           resolve(result)
         } else {

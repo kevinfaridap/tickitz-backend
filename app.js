@@ -3,7 +3,6 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const port = process.env.PORT
-// const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 
@@ -13,8 +12,7 @@ const morgan = require('morgan')
 // const routerPayments = require('./src/routers/payments')
 const route = require('./src/routers/index')
 
-
-app.use(express.urlencoded({ extended: false}))
+app.use(express.urlencoded({ extended: false }))
 // parse app JSON
 app.use(express.json())
 app.use(cors())
@@ -44,9 +42,6 @@ app.use((err, req, res, next) => {
     status_error: err.status
   })
 })
-
-
-
 
 app.listen(port, () => {
   console.log('Server berjalan di port ' + port)

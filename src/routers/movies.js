@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const moviesController = require('../controllers/movies')
 const auth = require('../middlewares/auth')
-const {uploadMulter} = require('../middlewares/multer')
-const {cacheAllMovies} = require('../middlewares/redis')
+const { uploadMulter } = require('../middlewares/multer')
+const { cacheAllMovies } = require('../middlewares/redis')
 
 router
   // REDIS pindah kemana?disesuaikan dengan kebutuhan
@@ -14,9 +14,8 @@ router
   // pagination di gabung ke getallmovie
   // .get('/page',auth.verifyAccess, cacheAllMovies, moviesController.getPageMovie)
   .get('/:idmovie', moviesController.getMovieById)
-  .post('/', uploadMulter.single('image') ,moviesController.insertMovie)
+  .post('/', uploadMulter.single('image'), moviesController.insertMovie)
   .put('/:idmovie', uploadMulter.single('image'), moviesController.updateMovie)
   .delete('/:idmovie', moviesController.deleteMovie)
-
 
 module.exports = router

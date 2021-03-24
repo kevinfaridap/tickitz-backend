@@ -1,21 +1,20 @@
 const { json } = require('body-parser')
 const ticketModels = require('../models/tickets')
 
-
 // TEST PAGINATION ( WORKS)
 exports.getPageTicket = (req, res) => {
-  const firstData = req.query.firstData || 0;
-  const limit = req.query.limit || 5;
+  const firstData = req.query.firstData || 0
+  const limit = req.query.limit || 5
 
   ticketModels.getPageTickets(firstData, limit)
     .then((result) => {
-        res.json({
-          message: 'Success',
-          status : 200,
-          data: result,
-          // totalData: totalData,
-          // totalPage: totalPage
-        })
+      res.json({
+        message: 'Success',
+        status: 200,
+        data: result
+        // totalData: totalData,
+        // totalPage: totalPage
+      })
     })
     .catch((err) => {
       res.json({
@@ -25,21 +24,20 @@ exports.getPageTicket = (req, res) => {
     })
 }
 
-
 // File lama sebelum pagination(works)
 exports.getTicket = (req, res) => {
   const searchMovie = req.query.ticketmovie || ''
   ticketModels.getTickets(searchMovie)
     .then((result) => {
-      if (result.length>0){
+      if (result.length > 0) {
         res.json({
           message: 'Success',
-          status : 200,
+          status: 200,
           data: result
         })
-      } else{
+      } else {
         res.json({
-         err: 'Data not found',
+          err: 'Data not found',
           status: 400
         })
       }
@@ -56,15 +54,15 @@ exports.getSearchTicket = (req, res) => {
   const searchMovie = req.query.ticketmovie || ''
   ticketModels.getSearchTickets(searchMovie)
     .then((result) => {
-      if (result.length>0){
+      if (result.length > 0) {
         res.json({
           message: 'Success',
-          status : 200,
+          status: 200,
           data: result
         })
-      } else{
+      } else {
         res.json({
-         err: 'Data not found',
+          err: 'Data not found',
           status: 400
         })
       }
@@ -77,21 +75,19 @@ exports.getSearchTicket = (req, res) => {
     })
 }
 
-
-
 exports.getSortTicket = (req, res) => {
   // const by = req.query.by ? req.query.by : "id";
   // const order = req.query.order ? req.query.order : "ASC";
-  const by = req.query.by || "id";
-  const order = req.query.order || "ASC";
+  const by = req.query.by || 'id'
+  const order = req.query.order || 'ASC'
   ticketModels.getSortTickets(by, order)
     .then((result) => {
-        res.json({
-          message: 'Success',
-          status : 200,
-          data: result
-        })
-      }) 
+      res.json({
+        message: 'Success',
+        status: 200,
+        data: result
+      })
+    })
     .catch((err) => {
       res.json({
         err: err + 'Error Cant Get Data',
@@ -99,25 +95,22 @@ exports.getSortTicket = (req, res) => {
       })
     })
 }
-
 
 exports.getTicketById = (req, res) => {
   const idTicket = req.params.id
   ticketModels.getTicketById(idTicket)
     .then((result) => {
-      if (result.length>0){
+      if (result.length > 0) {
         res.json({
           message: 'Ini data dari id = ' + idTicket,
           data: result
         })
-      } else{
+      } else {
         res.json({
-         err: 'Cannot find data id = ' + idTicket,
+          err: 'Cannot find data id = ' + idTicket,
           status: 400
         })
-  
       }
-
     })
     .catch((err) => {
       console.log(err)
@@ -141,7 +134,7 @@ exports.insertTicket = (req, res) => {
   }
   ticketModels.insertTicket(data)
     .then((result) => {
-      res.json({ 
+      res.json({
         message: 'Success Insert Data',
         status: 200,
         data: data
@@ -149,7 +142,7 @@ exports.insertTicket = (req, res) => {
     })
     .catch((err) => {
       res.json({
-        err: 'Failed Insert Data'+ "  " + err,
+        err: 'Failed Insert Data' + '  ' + err,
         status: 400
       })
     })
@@ -169,13 +162,13 @@ exports.updateTicket = (req, res) => {
   }
   ticketModels.updateTicket(idTicket, data)
     .then((result) => {
-      if(result.changedRows !== 0){
+      if (result.changedRows !== 0) {
         res.json({
           message: 'Success update data',
           status: 200,
           data: data
         })
-      }else{
+      } else {
         res.json({
           err: 'No Id in database',
           status: 500
@@ -184,7 +177,7 @@ exports.updateTicket = (req, res) => {
     })
     .catch((err) => {
       res.json({
-        err: 'No data in databse' + "   " + err,
+        err: 'No data in databse' + '   ' + err,
         status: 500
       })
     })
@@ -194,14 +187,14 @@ exports.deleteTicket = (req, res) => {
   const idTicket = req.params.id
   ticketModels.deleteTicket(idTicket)
     .then((result) => {
-      if(result.affectedRows !== 0){
+      if (result.affectedRows !== 0) {
         res.json({
-          message: `Success delete id ${idTicket} !`,
+          message: `Success delete id ${idTicket} !`
           // data: result
         })
-      } else{
+      } else {
         res.json({
-          message:'Id not found !',
+          message: 'Id not found !',
           status: 500
         })
       }
@@ -210,9 +203,6 @@ exports.deleteTicket = (req, res) => {
       console.log(err)
     })
 }
-
-
-
 
 // TEST PAGINATION
 // exports.pageTicket = (req, res) => {
