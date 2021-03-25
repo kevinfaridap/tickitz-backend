@@ -43,11 +43,10 @@
   <li> Make sure you use the right ```PORT  </li>
   <li> Install the components above too if needed  </li>
 </ol>
-```DB_HOST = localhost
-DB_ USER = root
-DB = yourdatabase```
 
 
 ```bash
-$ git diff branch1 branch2
+DB_HOST = localhost
+DB_ USER = root
+DB = yourdatabase
 ```
