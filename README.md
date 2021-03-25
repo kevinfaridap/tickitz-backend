@@ -46,3 +46,8 @@
 ```DB_HOST = localhost
 DB_ USER = root
 DB = yourdatabase```
+
+
+```bash
+$ git diff branch1 branch2
+```
