@@ -68,7 +68,7 @@ exports.registerUser = async (req, res) => {
     //   return helpers.response(res, null, 401, {email : 'Email already exists'})
     // }
     if (result.length !== 0) {
-      return helpers.response(res, null, 401, { email: 'Email already exists' })
+      return helpers.response(res, null, 200, { email: 'Email already exists' })
     }
     const data = {
       idUser: uuidv4(),
@@ -92,12 +92,12 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body
     const result = await userModels.findUser(email)
     if (result.length === 0) {
-      return helpers.response(res, null, 401, { message: 'Email or Password is incorrect' })
+      return helpers.response(res, null, 200, { message: 'Email or Password is incorrect' })
     }
     const user = result[0]
     const isValid = await bcrypt.compare(password, user.password)
     if (!isValid) {
-      return helpers.response(res, null, 401, { message: 'Email or Password is incorrect' })
+      return helpers.response(res, null, 200, { message: 'Email or Password is incorrect' })
     }
     delete user.password
 

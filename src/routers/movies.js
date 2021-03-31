@@ -8,7 +8,11 @@ const { cacheAllMovies } = require('../middlewares/redis')
 router
   // REDIS pindah kemana?disesuaikan dengan kebutuhan
   // .get('/', auth.verifyAccess, cacheAllMovies, moviesController.getMovie)
-  .get('/', auth.verifyAccess, moviesController.getMovie)
+  
+  // auth di hilangkan sementara untuk frontend
+  // .get('/', auth.verifyAccess, moviesController.getMovie)
+  .get('/', moviesController.getMovie)
+
   .get('/search', moviesController.getSearchMovie)
   .get('/sort', moviesController.getSortMovie)
   // pagination di gabung ke getallmovie

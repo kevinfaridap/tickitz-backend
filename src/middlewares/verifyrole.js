@@ -22,7 +22,7 @@ function verify () {
 
             next()
           } else {
-            return helper.response(res, null, 401, {
+            return helper.response(res, null, 200, {
               message: 'You dont have permission!'
             })
           }

@@ -113,7 +113,7 @@ exports.getMovieById = (req, res) => {
 exports.insertMovie = (req, res) => {
   if (!req.file) {
     const err = new Error('You must upload the image!')
-    err.errorStatus = 400
+    err.errorStatus = 200
     throw err
   }
 
@@ -149,7 +149,7 @@ exports.updateMovie = (req, res) => {
   // console.log(req.file.filename);
   if (!req.file) {
     const err = new Error('You must upload the image!')
-    err.errorStatus = 400
+    err.errorStatus = 200
     throw err
   }
 
