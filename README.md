@@ -1,5 +1,4 @@
-<div> # beginner-backend-arkademy </div> 
-<div> # intermediate-backend-arkademy </div> 
+# Ticktiz Ticket Backend
  <h5> by Kevin Farid Alpharisy </h5>
 
 # About This Project 
