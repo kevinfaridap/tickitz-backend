@@ -49,3 +49,10 @@ DB_HOST = localhost
 DB_ USER = root
 DB = yourdatabase
 ```
+
+# Visit Project 
+<h4> Fronte End </h4>
+<p> Link : https://github.com/kevinfaridap/week5-frontend-beginner </p>
+<br />
+<h4> Demo App </h4>
+<p> Link : https://ticktiz-ticket.netlify.app/ </p>
