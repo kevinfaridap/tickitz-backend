@@ -1,58 +1,64 @@
-# Ticktiz Ticket Backend
- <h5> by Kevin Farid Alpharisy </h5>
-
-# About This Project 
-<img src="https://miro.medium.com/max/365/1*d2zLEjERsrs1Rzk_95QU9A.png" style="margin-left: auto; margin-right: auto;" />
-<p> This project was built by using nodejs, express js, and other components below. This project's name is ticktiz, this application helps customers to purchase movie tickets easily and faster. They also can see all the upcoming movies and now showing movies. We will add more features to help custumers soon. </p>
-<p> This project made to finish the task week 6 from Mr. Muhammad Risano Akbar. This task continues from week 4 and added some new routes, authorization, authentication, upload file in this case images with multer, also hash password, jwt, and redis.</p>
-<p>In this case i made all the backend needed for ticktiz tickets and will add something else if needed too. </p>
-
-
-# Add
-<ul>
-  <li> Authorization  </li>
-  <li> Authentication  </li>
-  <li> Multer  </li>
-  <li> Hash password  </li>
-  <li> Jwt  </li>
-  <li> Redis  </li>
-</ul>
+<h3 align="center">Ticktiz Ticket Api</h3>
+  <p align="center">
+   <img src="https://miro.medium.com/max/365/1*d2zLEjERsrs1Rzk_95QU9A.png" style="margin-left: auto; margin-right: auto;" />
+  </p>
+  <p align="center">
+   This Api is for Ticktiz Ticket App. this application helps customers to purchase        movie tickets easily and faster. They also can see all the upcoming movies and now      showing movies. We will add more features to help custumers soon.
+  </p>
 
 
-# List of components
-<ul>
-  <li> Node.js  </li>
-  <li> Express.js  </li>
-  <li> MYSQL2  </li>
-  <li> Cors  </li>
-  <li> Dotenv  </li>
-  <li> Morgan  </li>
-  <li> Nodemon  </li>
-  <li> Error Handling (update soon)  </li>
-  <li> Linter  </li>
-</ul>
+## Built With
+* [Node.js](https://nodejs.org/en/)
+* [Express.js](https://expressjs.com/)
+
+## Requirements
+* [Node.js](https://nodejs.org/en/)
+* [Postman](https://www.getpostman.com/) for testing
+* [Database](database-example.sql)
 
 
-# How To Start The Projects
-<ol>
-  <li> Download all the files </li>
-  <li> Open the file in your favorite text editor, in this case i would i like to recommend you to use Visual Studio Code </li>
-  <li> Import the database files  </li>
-  <li> Configs the port and databases  </li>     
-  <li> Make sure you use the right ```PORT  </li>
-  <li> Install the components above too if needed  </li>
-</ol>
+## Installation
+
+Clone this repository and then use the package manager npm to install dependencies.
 
 
 ```bash
+npm install
+```
+
+## Setup .env example
+
+Create .env file in your root project folder.
+
+```env
+
 DB_HOST = localhost
 DB_ USER = root
 DB = yourdatabase
+
 ```
 
-# Visit Project 
-<h4> Frontend </h4>
-<p> Link : https://github.com/kevinfaridap/week5-frontend-beginner </p>
+## Run the app
 
-<h4> Demo App </h4>
-<p> Link : https://ticktiz-ticket.netlify.app/ </p>
+Development mode
+
+```bash
+npm run dev
+```
+
+Deploy mode
+
+```bash
+npm start
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+
+
+># Visit Project
+- :white_check_mark: [Frontend](https://github.com/kevinfaridap/week5-frontend-beginner)
+- :rocket: [Telegram Apps](https://ticktiz-ticket.netlify.app/)
