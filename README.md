@@ -1,10 +1,15 @@
-<h3 align="center">Ticktiz Ticket Api</h3>
+<p align="center">
+
+  <h3 align="center">Tickitz API</h3>
   <p align="center">
-   <img src="https://miro.medium.com/max/365/1*d2zLEjERsrs1Rzk_95QU9A.png" style="margin-left: auto; margin-right: auto;" />
+   <br />
+   <image width="" src='https://user-images.githubusercontent.com/74039235/119124755-39d54300-ba5b-11eb-82f9-ab35478380c4.png' />
+   <br />
+   This Api is for Ticktiz. this application helps customers to purchase movie tickets easily and faster. They also can see
+   <br />
+    all the upcoming movies and now showing movies. We will add more features to help custumers soon.
   </p>
-  <p align="center">
-   This Api is for Ticktiz Ticket App. this application helps customers to purchase        movie tickets easily and faster. They also can see all the upcoming movies and now      showing movies. We will add more features to help custumers soon.
-  </p>
+
 
 
 ## Built With
