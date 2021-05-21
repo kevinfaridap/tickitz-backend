@@ -2,6 +2,8 @@ const { json } = require('body-parser')
 const moviesModels = require('../models/movies')
 const redis = require('redis')
 const client = redis.createClient(6379)
+const scheduleModels = require('../models/schedule')
+
 
 // GetAllMovie + Search + Pagination
 exports.getMovie = async (req, res) => {
@@ -94,9 +96,15 @@ exports.getMovieById = (req, res) => {
   moviesModels.getMoviesById(idMovie)
     .then((result) => {
       if (result.length > 0) {
-        res.json({
-          message: 'Ini data dari id = ' + idMovie,
-          data: result
+        scheduleModels.getScheduleById(idMovie)
+        .then((resultSchedule)=>{
+          res.json({
+            data: {
+              movie: result,
+              schedule: resultSchedule,
+              message: 'Ini data dari id = ' + idMovie,
+            }
+          })
         })
       } else {
         res.json({

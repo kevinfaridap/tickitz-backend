@@ -13,6 +13,19 @@ const user = {
     })
   },
 
+  
+  getUsersByEmail: (email) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT * FROM user WHERE email= ?', email, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  },
+
   getUserById: (idUser) => {
     return new Promise((resolve, reject) => {
       connection.query('SELECT * FROM user WHERE idUser= ?', idUser, (err, result) => {
@@ -53,6 +66,19 @@ const user = {
   findUser: (email) => {
     return new Promise((resolve, reject) => {
       connection.query('SELECT * from user WHERE email = ?', email, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  },
+
+  updateImgs:(data, idUser) => {
+    return new Promise((resolve, reject) => {
+      console.log(data.image, idUser);
+      connection.query(`UPDATE user SET image='${data.image}' WHERE idUser='${idUser}'`, (err, result) => {
         if (!err) {
           resolve(result)
         } else {

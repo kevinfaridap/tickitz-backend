@@ -18,7 +18,7 @@ router
   // pagination di gabung ke getallmovie
   // .get('/page',auth.verifyAccess, cacheAllMovies, moviesController.getPageMovie)
   .get('/:idmovie', moviesController.getMovieById)
-  .post('/', uploadMulter.single('image'), moviesController.insertMovie)
+  .post('/',auth.verifyAccess, uploadMulter.single('image'), moviesController.insertMovie)
   .put('/:idmovie', uploadMulter.single('image'), moviesController.updateMovie)
   .delete('/:idmovie', moviesController.deleteMovie)
 

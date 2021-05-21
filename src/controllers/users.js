@@ -18,6 +18,26 @@ exports.getUser = (req, res) => {
     })
 }
 
+
+exports.getUserByEmail = (req, res) => {
+  const email = req.params.email
+  userModels.getUsersByEmail(email)
+    .then((result) => {
+      if (result.length > 0) {
+        res.json({
+          message: `Succes get data ${email}`,
+          status: 200,
+          data: result
+        })
+      } else {
+        res.json({
+          message: 'Id not found !',
+          status: 500
+        })
+      }
+    })
+}
+
 exports.getUserById = (req, res) => {
   const idUser = req.params.idUser
   userModels.getUserById(idUser)
@@ -102,7 +122,7 @@ exports.loginUser = async (req, res) => {
     delete user.password
 
     // Cek email
-    const payload = { email: user.email, firstName: user.firstName, lastName: user.lastName, role: user.role }
+    const payload = { idUser:user.idUser, email: user.email, firstName: user.firstName, lastName: user.lastName, role: user.role }
     jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' }, function (err, token) {
       user.token = token
       return helpers.response(res, user, 200, null)
@@ -114,12 +134,11 @@ exports.loginUser = async (req, res) => {
 
 exports.updateUser = (req, res) => {
   const idUser = req.params.idUser
-  const { firstName, lastName, email, phoneNumber } = req.body
+  const { firstName, lastName, phoneNumber } = req.body
 
   const data = {
     firstName,
     lastName,
-    email,
     phoneNumber
   }
   userModels.updateUser(idUser, data)
@@ -127,6 +146,40 @@ exports.updateUser = (req, res) => {
       if (result.changedRows !== 0) {
         res.json({
           message: 'Succes update data',
+          status: 200,
+          data: data
+        })
+      } else {
+        res.json({
+          message: 'Id not found !',
+          status: 500
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+
+
+exports.updateImg = (req, res) => {
+  if (!req.file) {
+    const err = new Error('You must upload the image!')
+    err.errorStatus = 200
+    throw err
+  }
+
+  const { idUser, image } = req.body
+
+  const data = {
+    image: `http://localhost:8000/image/${req.file.filename}`,	
+  }
+  userModels.updateImgs(data, idUser)
+    .then((result) => {
+      if (result.changedRows !== 0) {
+        res.json({
+          message: 'Succes update Image',
           status: 200,
           data: data
         })

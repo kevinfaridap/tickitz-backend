@@ -16,10 +16,10 @@ const movie = {
   },
 
   // getallmovie + search +pagination
-  getMovies: (movietittle, offset, limit) => {
+  getMovies: (movietittle, offset, limit, by, order) => {
     return new Promise((resolve, reject) => {
       // console.log("tittleee",movietittle);
-      connection.query(`SELECT * FROM nowshowingmovies WHERE tittleMovie LIKE '%${movietittle}%' LIMIT ${limit} OFFSET ${offset}`, (err, result) => {
+      connection.query(`SELECT * FROM nowshowingmovies WHERE tittleMovie LIKE '%${movietittle}%' ORDER BY ${by} ${order} LIMIT ${limit} OFFSET ${offset}`, (err, result) => {
         if (!err) {
           // console.log(result);
           resolve(result)
@@ -29,6 +29,19 @@ const movie = {
       })
     })
   },
+
+  getSortMovies: (by, order) => {
+    return new Promise((resolve, reject) => {
+      connection.query(`SELECT * FROM nowshowingmovies ORDER BY ${by} ${order}`, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  },
+
 
   getMoviesById: (idmovie) => {
     return new Promise((resolve, reject) => {

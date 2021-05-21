@@ -7,8 +7,12 @@ const { cacheAllMovies, clearAllMovies } = require('../middlewares/redis')
 const verifyrole = require('../middlewares/verifyrole')
 
 router
+  // Di comment sementara u/ edit frontend 
+  // .get('/', auth.verifyAccess, cacheAllMovies, showMoviesController.getMovie)
 
-  .get('/', auth.verifyAccess, cacheAllMovies, showMoviesController.getMovie)
+  .get('/', showMoviesController.getMovie)
+  .get('/sort', showMoviesController.getSortMovie)
+
   // .get('/', auth.verifyAccess, showMoviesController.getMovie)
   .get('/:idmovie', showMoviesController.getMovieById)
   .post('/', auth.verifyAccess, verifyrole.verify(), uploadMulter.single('image'), clearAllMovies, showMoviesController.insertMovie)

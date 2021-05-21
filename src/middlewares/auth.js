@@ -3,7 +3,6 @@ const helpers = require('../helpers/helper')
 
 const verifyAccess = (req, res, next) => {
   const authorization = req.headers.authorization
-  // console.log(authorization);
   if (!authorization) {
     return helpers.response(res, null, 401, {
       message: 'Server needs token!'

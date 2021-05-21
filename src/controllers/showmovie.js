@@ -5,16 +5,21 @@ const client = redis.createClient(6379)
 
 // GetAllMovie + Search + Pagination
 exports.getMovie = async (req, res) => {
+  const by = req.query.by || 'id'
+  const order = req.query.order || 'ASC'
   const searchMovie = req.query.movietittle || ''
   const limit = parseInt(req.query.limit) || 5
   const page = parseInt(req.query.page) || 1
+  
   const countMovies = await showMoviesModels.countMovies()
   // console.log(req.query.limit);
   // console.log(req.query.movietittle);
   const totalData = countMovies[0].totalData
   const totalPage = Math.ceil(totalData / limit)
   const offset = (page - 1) * limit
-  showMoviesModels.getMovies(searchMovie, offset, limit)
+
+  
+  showMoviesModels.getMovies(searchMovie, offset, limit, by, order)
 
     .then((result) => {
       if (result.length > 0) {
@@ -44,6 +49,31 @@ exports.getMovie = async (req, res) => {
       })
     })
 }
+
+
+exports.getSortMovie = (req, res) => {
+  const by = req.query.by || 'id'
+  const order = req.query.order || 'ASC'
+  showMoviesModels.getSortMovies(by, order)
+    .then((result) => {
+      res.json({
+        message: 'Success',
+        status: 200,
+        data: result
+      })
+    })
+    .catch((err) => {
+      res.json({
+        err: err + 'Error Cant Get Data',
+        status: 400
+      })
+    })
+}
+
+
+
+
+
 
 exports.getMovieById = (req, res) => {
   const idMovie = req.params.idmovie
