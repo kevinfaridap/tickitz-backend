@@ -8,6 +8,7 @@ const routeShowMovies = require('./showmovie')
 const routeCinema = require('./cinema')
 const routeSchedule = require('./schedule')
 const routeSeat = require('./seat')
+const routeTicketResult = require('./ticketresult')
 
 route.use('/tickets', routeTicket)
 route.use('/users', routeUsers)
@@ -17,6 +18,8 @@ route.use('/showmovies', routeShowMovies)
 route.use('/cinema', routeCinema)
 route.use('/schedule', routeSchedule)
 route.use('/seat', routeSeat)
+route.use('/ticketresult', routeTicketResult)
+
 
 
 module.exports = route

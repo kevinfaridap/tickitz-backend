@@ -3,10 +3,6 @@ const seatModels = require('../models/seat')
 
 
 exports.getSeat = (req, res) => {
-  // const seatCategory = req.body
-  // const data = {
-  //   seatCategory: seatCategory
-  // }
   const seatCategory = req.params.seatcategory
   seatModels.getSeats(seatCategory)
     .then((result) => {
