@@ -13,7 +13,7 @@ router
   // .get('/:idUser', auth.verifyAccess, verifyrole.verify(), userController.getUserById)
   .get('/:email', userController.getUserByEmail)
   .get('/:idUser', userController.getUserById)
-  
+  .put('/verify', userController.verifyUser)
   .post('/', auth.verifyAccess, verifyrole.verify(), userController.insertUser)
   .post('/register', userController.registerUser)
   .post('/login', userController.loginUser)

@@ -15,6 +15,18 @@ const ticketResults = {
             })
         })
     },
+
+    getTicketHistorys: (idUser) => {
+      return new Promise((resolve, reject) => {
+          connection.query(`SELECT * FROM ticketresults WHERE idUser = '${idUser}' ORDER BY dateTimes DESC LIMIT 0,3 `, (err, result) => {
+              if (!err) {
+              resolve(result)
+              } else {
+              reject(err)
+              }
+          })
+      })
+  },
     
     getTicketResultsById: (id) => {
         return new Promise((resolve, reject) => {

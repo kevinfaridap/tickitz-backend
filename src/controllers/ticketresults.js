@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const moment = require('moment')
 moment.locale('id');
 
-exports.getTicketResult = (req, res) => {
+  exports.getTicketResult = (req, res) => {
     ticketResultModels.getTicketResults()
       .then((result) => {
         res.json({
@@ -15,6 +15,25 @@ exports.getTicketResult = (req, res) => {
       })
       .catch((err) => {
         console.log(err)
+      })
+  }
+
+  exports.getTicketHistory = (req, res) => {
+    const idUser = req.params.idUser
+    ticketResultModels.getTicketHistorys(idUser)
+      .then((result) => {
+        if (result.length > 0) {
+          res.json({
+            message: `Succes get data id: ${idUser}`,
+            status: 200,
+            data: result
+          })
+        } else {
+          res.json({
+            message: 'Id not found !',
+            status: 500
+          })
+        }
       })
   }
   
@@ -38,7 +57,7 @@ exports.getTicketResult = (req, res) => {
   }
 
 exports.insertTicketResult = (req, res) => {
-  const {movieTittle, date, time, seatvalues, seatnames, price} = req.body
+  const {movieTittle, idUser, date, time, seatvalues, seatnames, price} = req.body
 
   const dateNow = new Date()
   const dateFormated = moment(dateNow).format('LL');
@@ -46,6 +65,7 @@ exports.insertTicketResult = (req, res) => {
   const data = {
     id: uuidv4(),
     movieTittle,
+    idUser,
     date: dateFormated,
     time,
     seatvalues,

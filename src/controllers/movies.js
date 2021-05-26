@@ -3,7 +3,9 @@ const moviesModels = require('../models/movies')
 const redis = require('redis')
 const client = redis.createClient(6379)
 const scheduleModels = require('../models/schedule')
-
+const { v4: uuidv4 } = require('uuid');
+const moment = require('moment')
+moment.locale('id');
 
 // GetAllMovie + Search + Pagination
 exports.getMovie = async (req, res) => {
@@ -118,40 +120,102 @@ exports.getMovieById = (req, res) => {
     })
 }
 
-exports.insertMovie = (req, res) => {
+exports.insertMovie = async (req, res) => {
   if (!req.file) {
     const err = new Error('You must upload the image!')
     err.errorStatus = 200
     throw err
   }
 
-  const { movieTittle, genre, directedBy, duration, casts, synopsis } = req.body
+  const dateNow = new Date()
+  const dateFormated = moment(dateNow).format('L');    
+  
+
+  const { movieTittle, genre, directedBy, duration, casts, synopsis, time, idCinema } = req.body
 
   const data = {
+    idMovie: uuidv4(),
     movieTittle,
     genre,
     directedBy,
-    releaseDate: new Date(),
+    releaseDate: dateFormated,
     duration,
     casts,
     image: `http://localhost:8000/image/${req.file.filename}`,
     synopsis
   }
-  moviesModels.insertMovies(data)
-    .then((result) => {
-      res.json({
-        message: 'Success Insert Data',
-        status: 200,
-        data: data
+  try {
+   const newmovie = await moviesModels.insertMovies(data)
+   if(newmovie<1){
+      helpers.response(res, null, 200, { message: 'There is no user' })
+       res.json({
+        message: 'No Data !!',
       })
-    })
-    .catch((err) => {
-      res.json({
-        err: 'Failed Insert Data' + '  ' + err,
-        status: 400
-      })
-    })
+      return;
+    } else {
+        const idnewmovie = data.idMovie
+        console.log(idnewmovie, 'id new movies', time, idCinema);
+        const schedule = await scheduleModels.insertNewSchedules(time, idnewmovie, idCinema)
+        .then((result) => {
+          res.json({
+            message: 'Success Insert Data Schedule',
+            status: 200,
+            data: result
+          })
+        })
+        .catch((err) => {
+          res.json({
+            err: 'Failed Insert Data' + '  ' + err,
+            status: 400
+          })
+        })
+        return;
+      }
+    } catch (err) {
+        console.log(err);
+        res.json({
+          err: err
+        })
+    }
+  
 }
+
+
+// Test ganti yg baru (tambah schedule, cinema)
+// exports.insertMovie = (req, res) => {
+//   if (!req.file) {
+//     const err = new Error('You must upload the image!')
+//     err.errorStatus = 200
+//     throw err
+//   }
+
+//   const { movieTittle, genre, directedBy, duration, casts, synopsis } = req.body
+
+//   const data = {
+//     movieTittle,
+//     genre,
+//     directedBy,
+//     releaseDate: new Date(),
+//     duration,
+//     casts,
+//     image: `http://localhost:8000/image/${req.file.filename}`,
+//     synopsis
+//   }
+//   moviesModels.insertMovies(data)
+//     .then((result) => {
+//       res.json({
+//         message: 'Success Insert Data',
+//         status: 200,
+//         data: data
+//       })
+//     })
+//     .catch((err) => {
+//       res.json({
+//         err: 'Failed Insert Data' + '  ' + err,
+//         status: 400
+//       })
+//     })
+// }
 
 exports.updateMovie = (req, res) => {
   // console.log(req.file.filename);

@@ -50,6 +50,18 @@ const user = {
     })
   },
 
+  verifyUsers: (email) => {
+    return new Promise((resolve, reject) => {
+      connection.query("UPDATE user SET active = true WHERE email = ?", email, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  },
+
   // Ganti dengan finduser
   checkEmail: (email) => {
     return new Promise((resolve, reject) => {

@@ -28,6 +28,19 @@ const schedule = {
   },
   
   
+  insertNewSchedules: (time, idnewmovie, idCinema) => {
+    return new Promise((resolve, reject) => {
+      console.log('lihat', time, idnewmovie, idCinema);
+      connection.query(`INSERT INTO schedule SET time='${time}', idMovie='${idnewmovie}', idCinema=${idCinema}`, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  },
+  
 
 
 //   insertSchedule: (data) => {
