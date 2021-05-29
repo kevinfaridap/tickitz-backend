@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const ticketResultController = require('../controllers/ticketResults')
+const ticketResultController = require('../controllers/ticketresults')
 
 router
   .get('/', ticketResultController.getTicketResult)

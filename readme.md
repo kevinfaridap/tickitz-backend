@@ -65,5 +65,5 @@ Please make sure to update tests as appropriate.
 
 
 ># Visit Project
-- :white_check_mark: [Frontend](https://github.com/kevinfaridap/week5-frontend-beginner)
-- :rocket: [Telegram Apps](https://ticktiz-ticket.netlify.app/)
+- :white_check_mark: [Frontend](https://github.com/kevinfaridap/week5-frontend-beginner/)
+- :rocket: [Ticktiz [Demo Aplikasi]](https://ticktiz-ticket.netlify.app/signin)

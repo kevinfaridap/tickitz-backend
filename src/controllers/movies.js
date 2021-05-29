@@ -1,7 +1,7 @@
 const { json } = require('body-parser')
 const moviesModels = require('../models/movies')
-const redis = require('redis')
-const client = redis.createClient(6379)
+// const redis = require('redis')
+// const client = redis.createClient(6379)
 const scheduleModels = require('../models/schedule')
 const { v4: uuidv4 } = require('uuid');
 const moment = require('moment')
@@ -141,7 +141,7 @@ exports.insertMovie = async (req, res) => {
     releaseDate: dateFormated,
     duration,
     casts,
-    image: `http://localhost:8000/image/${req.file.filename}`,
+    image: `${process.env.API_BACKEND}/image/${req.file.filename}`,
     synopsis
   }
   try {
@@ -233,7 +233,7 @@ exports.updateMovie = (req, res) => {
     releaseDate: new Date(),
     directedBy,
     duration,
-    image: `http://localhost:8000/image/${req.file.filename}`,
+    image: `${process.env.API_BACKEND}/image/${req.file.filename}`,
     casts,
     synopsis
   }

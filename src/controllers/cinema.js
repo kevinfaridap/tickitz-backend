@@ -51,7 +51,7 @@ exports.insertCinema = (req, res) => {
     cinemaName,
     cinemaAddress,
     price,
-    image: `http://localhost:8000/image/${req.file.filename}`,
+    image: `${process.env.API_BACKEND}/image/${req.file.filename}`,
   }
   cinemaModels.insertCinemas(data)
     .then((result) => {
@@ -86,7 +86,7 @@ exports.updateCinema = (req, res) => {
     cinemaName,
     cinemaAddress,
     price,
-    image: `http://localhost:8000/image/${req.file.filename}`,
+    image: `${process.env.API_BACKEND}/image/${req.file.filename}`,
   }
   cinemaModels.updatecinemas(idcinema, data)
     .then((result) => {

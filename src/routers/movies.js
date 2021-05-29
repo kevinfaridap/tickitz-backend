@@ -3,7 +3,7 @@ const router = express.Router()
 const moviesController = require('../controllers/movies')
 const auth = require('../middlewares/auth')
 const { uploadMulter } = require('../middlewares/multer')
-const { cacheAllMovies } = require('../middlewares/redis')
+// const { cacheAllMovies } = require('../middlewares/redis')
 
 router
   // REDIS pindah kemana?disesuaikan dengan kebutuhan

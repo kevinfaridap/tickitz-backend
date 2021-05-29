@@ -37,3 +37,19 @@ exports.getSeatById = (req, res) => {
 }
 
 
+exports.UpdatedSoldSeat = (req, res) => {
+  const seatnames = req.params.seatnames
+
+  seatModels.UpdatedSoldSeats(seatnames)
+    .then((result) => {
+      res.json({
+        data: result,
+        message: 'Success Updated Seat to Sold!',
+        status: 200
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+

@@ -7,8 +7,8 @@ const seatController = require('../controllers/seat')
 
 router
   .get('/getbycategory/:seatcategory', seatController.getSeat)
-
   .get('/:idmovie', seatController.getSeatById)
+  .put('/soldticket/:seatnames', seatController.UpdatedSoldSeat)
 //   .post('/', upload.single('image'), scheduleController.insertschedule)
 //   .put('/:idschedule', scheduleController.updateschedule)
 //   .delete('/:idschedule', scheduleController.deleteschedule)

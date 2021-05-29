@@ -82,14 +82,14 @@ exports.insertUser = (req, res) => {
 // hash passowrd
 exports.registerUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, phoneNumber, role } = req.body
+    const { email, password} = req.body
     const result = await userModels.findUser(email)
     // const count = result[0].countEmail
     // if (count > 0){
     //   return helpers.response(res, null, 401, {email : 'Email already exists'})
     // }
     if (result.length !== 0) {
-      return helpers.response(res, null, 200, { email: 'Email already exists' })
+      return helpers.response(res, null, 200, { message: 'Email already exists' })
     }
     const data = {
       idUser: uuidv4(),
@@ -97,10 +97,10 @@ exports.registerUser = async (req, res) => {
       password: await hashPassword.hashPassword(password),
       firstName: 'yourname',
       lastName: 'lastName',
-      phoneNumber: phoneNumber,
+      phoneNumber: 'yourphone',
       active: false,
       role: 1,
-      image: 'http://localhost:8000/image/1621882015317-default-image.png'
+      image: `${process.env.API_BACKEND}/image/1621882015317-default-image.png`
     }
     const resultInsert = await userModels.insertUser(data)
     
@@ -117,7 +117,7 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body
     const result = await userModels.findUser(email)
     if (result.length === 0) {
-      return helpers.response(res, null, 200, { message: 'Email or Password is not registered' })
+      return helpers.response(res, null, 200, { message: 'Email and Password are not registered' })
     }
     const user = result[0]
 
@@ -227,7 +227,7 @@ exports.updateImg = (req, res) => {
   const { idUser, image } = req.body
 
   const data = {
-    image: `http://localhost:8000/image/${req.file.filename}`,	
+    image: `${process.env.API_BACKEND}/image/${req.file.filename}`,	
   }
   userModels.updateImgs(data, idUser)
     .then((result) => {

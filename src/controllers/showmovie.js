@@ -1,7 +1,7 @@
 const { json } = require('body-parser')
 const showMoviesModels = require('../models/showmovie')
-const redis = require('redis')
-const client = redis.createClient(6379)
+// const redis = require('redis')
+// const client = redis.createClient(6379)
 
 // GetAllMovie + Search + Pagination
 exports.getMovie = async (req, res) => {
@@ -25,7 +25,7 @@ exports.getMovie = async (req, res) => {
       if (result.length > 0) {
         // console.log(result);
         const dataMovie = result
-        client.setex('getAllNowShowingMovies', 60 * 60 * 12, JSON.stringify(dataMovie))
+        // client.setex('getAllNowShowingMovies', 60 * 60 * 12, JSON.stringify(dataMovie))
         res.json({
           message: 'Success',
           status: 200,
@@ -113,7 +113,7 @@ exports.insertMovie = (req, res) => {
     releaseDate: new Date(),
     durationMovie,
     synopsisMovie,
-    image: `http://localhost:8000/image/${req.file.filename}`
+    image: `${process.env.API_BACKEND}/image/${req.file.filename}`
   }
   showMoviesModels.insertMovies(data)
     .then((result) => {
@@ -149,7 +149,7 @@ exports.updateMovie = (req, res) => {
     releaseDate: new Date(),
     durationMovie,
     synopsisMovie,
-    image: `http://localhost:8000/image/${req.file.filename}`
+    image: `${process.env.API_BACKEND}/image/${req.file.filename}`
   }
   // console.log(data);
   showMoviesModels.updateMovies(idMovie, data)
